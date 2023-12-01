@@ -1,15 +1,21 @@
 import { useState } from 'react'
-
 import './App.css'
-import Footer from './Components/Footer'
+import { Route, Routes } from 'react-router-dom'
+import Homepage from './Pages/Homepage'
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  
 
   return (
-    <>
-    <Footer />
-    </>
+    
+    <Routes>
+      <Route path='/' element={<Homepage />}></Route>
+   
+   </Routes>
+    
+    
+    
   )
 }
 
