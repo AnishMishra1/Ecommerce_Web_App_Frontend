@@ -1,14 +1,17 @@
 import React from 'react'
 import HomeLayouts from '../Layouts/HomeLayouts'
 import { Link } from 'react-router-dom'
+import dansem from '../assets/Images/dansem.jpg'
+
+
 
 
 
 const Homepage = () => {
   return (
     <HomeLayouts>
-    <div className="pt-10 w-full bg-slate-900 text-white flex items-center justify-center gap-10  h-[90vh]">
-        <div className="w-1/2 space-y-6">
+    <div className="pt-10 w-full bg-slate-900 text-white flex flex-col md:flex-row items-center justify-center gap-10  h-[90vh]">
+        <div className="w-1/2 space-y-6 mx-5">
             <h1 className="text-5xl font-semibold">
                
                 <span className="text-cyan-500 font-bold">
@@ -33,10 +36,14 @@ const Homepage = () => {
                 </Link>
             </div>
         </div>
-{/* 
-        <div className="w-1/2 flex items-center justify-center">
-            <img alt="homepage image" src={Capture} />
-        </div> */}
+
+        <div className="w-1/2 flex items-center justify-center sm:w-auto ">
+           
+           <img alt="homepage image" src={dansem}  />
+          
+          
+           
+        </div>
 
     </div>
 </HomeLayouts>

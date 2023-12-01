@@ -57,8 +57,11 @@ const HomeLayouts = ({ children }) => {
         </div>
 
         {children}
-
+        <div className='h-auto'>
         <Footer />
+        </div>
+
+        
     </div>
   )
 }
