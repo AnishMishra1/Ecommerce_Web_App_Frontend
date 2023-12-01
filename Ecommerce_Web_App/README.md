@@ -17,6 +17,9 @@
 ### Add file extensions to tailwind config file in the contents property
     "./src/**/*.{html,js,jsx,ts,tsx}", "./index.html",
 
+### Run comand for 
+    npx tailwindcss init -p    
+
 ### Add the tailwind directives at the top of the index.css file
     @tailwind base;
     @tailwind components;
