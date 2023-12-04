@@ -13,6 +13,10 @@ const HomeLayouts = ({ children }) => {
    const isLoggedIn = useSelector( (state) =>  state?.auth?.isLoggedIn)
    const role = useSelector((state) => state?.auth?.role)
 
+   function handleLogout(){
+    e.preventDefault()
+   }
+
     function changeWidth() {
         const drawerSide = document.getElementsByClassName("drawer-side");
         drawerSide[0].style.width = 'auto';
@@ -27,7 +31,7 @@ const HomeLayouts = ({ children }) => {
     }
   return (
     <div className='min-h-[90vh] '>
-        <div className='drawer absolute right-0 z-50 w-fit '>
+        <div className='drawer absolute z-50 w-fit '>
                <input id="my-drawer" type="checkbox" className="drawer-toggle" />
                <div className="drawer-content">
                  <label htmlFor="my-drawer" className='cursor-pointer relative'>
@@ -40,7 +44,7 @@ const HomeLayouts = ({ children }) => {
                </div>
                <div className="drawer-side w-0">
                <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
-                   <ul className="menu p-4 w-48 sm:w-80 bg-base-100 text-base-content relative">
+                   <ul className="menu p-4 h-[100%] w-48 sm:w-80 bg-base-100 text-base-content relative">
                     <li className='w-fit absolute right-2 z-50'>
                         <button>
                           <AiFillCloseCircle
@@ -65,8 +69,8 @@ const HomeLayouts = ({ children }) => {
                     )}
                    </ul>
                    {!isLoggedIn && (
-                    <div className="absolute bottom-0 mx-10 flex flex-row justify-center items-center gap-10 text-white">
-                      <button className='btn-primary py-2 px-5 rounded-full bg-green-900 text-bold w-full hover:bg-green-400'>
+                    <div className="absolute bottom-4 md:mx-5 flex flex-row justify-center items-center gap-5 text-white">
+                      <button className='btn-secondary py-1 px-4 rounded-full bg-green-900 text-bold w-full  hover:bg-green-400'>
                         <Link to='/login'>Login</Link>
                       </button>
                       <button className='btn-secondary py-1 px-4 rounded-full bg-green-900 text-bold w-full  hover:bg-green-400'>
@@ -76,12 +80,12 @@ const HomeLayouts = ({ children }) => {
                    )}
 
                     {isLoggedIn && (
-                    <div className="absolute bottom-0 mx-10 flex flex-row justify-center items-center gap-10 text-white">
+                    <div className="absolute bottom-0 mx-10 flex flex-row justify-center items-center gap-5 text-white">
                       <button className='btn-primary py-2 px-5 rounded-full bg-green-900 text-bold w-full hover:bg-green-400'>
                         <Link to='/profile'>Profile</Link>
                       </button>
                       <button className='btn-secondary py-1 px-4 rounded-full bg-green-900 text-bold w-full  hover:bg-green-400'>
-                        <Link to='/'>Logout</Link>
+                        <Link onClick={handleLogout}>Logout</Link>
                       </button>
                     </div>
                    )} 
