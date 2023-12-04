@@ -10,7 +10,7 @@ import dansem from '../assets/Images/dansem.jpg'
 const Homepage = () => {
   return (
     <HomeLayouts>
-    <div className="pt-10 w-full bg-slate-900 text-white flex flex-col md:flex-row items-center justify-center gap-10  h-[90vh]">
+    <div className="pt-10 w-full bg-slate-900 text-white flex items-center justify-center gap-10  h-[90vh]">
         <div className="w-1/2 space-y-6 mx-5">
             <h1 className="text-5xl font-semibold">
                
@@ -37,9 +37,9 @@ const Homepage = () => {
             </div>
         </div>
 
-        <div className="w-1/2 flex items-center justify-center sm:w-auto ">
+        <div className="w-1/2 flex items-center justify-center ">
            
-           <img alt="homepage image" src={dansem}  />
+           <img alt="homepage image" src={dansem} className='w-30 h-30 md:w-50 md:h-50' />
           
           
            

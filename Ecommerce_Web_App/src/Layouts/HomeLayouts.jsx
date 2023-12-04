@@ -1,10 +1,17 @@
 import React from 'react'
 import {FiMenu} from 'react-icons/fi'
 import { AiFillCloseCircle} from 'react-icons/ai'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Footer from '../Components/Footer';
+import { useDispatch , useSelector} from 'react-redux'
+
 
 const HomeLayouts = ({ children }) => {
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+
+   const isLoggedIn = useSelector( (state) =>  state?.auth?.isLoggedIn)
+   const role = useSelector((state) => state?.auth?.role)
 
     function changeWidth() {
         const drawerSide = document.getElementsByClassName("drawer-side");
@@ -51,7 +58,33 @@ const HomeLayouts = ({ children }) => {
                     <li>
                         <Link to='/contact'>Contact Us</Link>
                     </li>
+                    {isLoggedIn && role === "ADMIN" && (
+                      <li>
+                        <Link to='/admin-dashboard'>Admin Dashboard</Link>
+                      </li>
+                    )}
                    </ul>
+                   {!isLoggedIn && (
+                    <div className="absolute bottom-0 mx-10 flex flex-row justify-center items-center gap-10 text-white">
+                      <button className='btn-primary py-2 px-5 rounded-full bg-green-900 text-bold w-full hover:bg-green-400'>
+                        <Link to='/login'>Login</Link>
+                      </button>
+                      <button className='btn-secondary py-1 px-4 rounded-full bg-green-900 text-bold w-full  hover:bg-green-400'>
+                        <Link to='/signup'>SignUp</Link>
+                      </button>
+                    </div>
+                   )}
+
+                    {isLoggedIn && (
+                    <div className="absolute bottom-0 mx-10 flex flex-row justify-center items-center gap-10 text-white">
+                      <button className='btn-primary py-2 px-5 rounded-full bg-green-900 text-bold w-full hover:bg-green-400'>
+                        <Link to='/profile'>Profile</Link>
+                      </button>
+                      <button className='btn-secondary py-1 px-4 rounded-full bg-green-900 text-bold w-full  hover:bg-green-400'>
+                        <Link to='/'>Logout</Link>
+                      </button>
+                    </div>
+                   )} 
                </div>
 
         </div>
