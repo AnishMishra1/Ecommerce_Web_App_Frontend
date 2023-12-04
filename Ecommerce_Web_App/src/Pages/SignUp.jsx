@@ -3,6 +3,7 @@ import HomeLayouts from '../Layouts/HomeLayouts';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast'
+import { createAccount } from '../Redux/Slices/AuthSlice';
 
 const SignUp = () => {
 
@@ -11,9 +12,11 @@ const SignUp = () => {
 
     const [input , setInput] = useState({
         fullName:'',
-        email: "",
+        email: '',
         password: ''
     })
+
+    // console.log("ejhjkhjkh",input.fullName,input.email,input.password)
 
     function handleInputChange(e){
         e.preventDefault();
@@ -25,7 +28,7 @@ const SignUp = () => {
 
     }
 
-    async function createAccount(event){
+    async function createNewAccount(event){
         event.preventDefault();
         if(!input.fullName || !input.email || !input.password){
             toast.error('All field are mandatory')
@@ -37,14 +40,22 @@ const SignUp = () => {
             return
         }
 
-        if(input.password.match("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$")){
+        if(!input.password.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)){
             toast.error('special charater is required')
             return
         }
-        if(input.email.match("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")){
+        if(!input.email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)){
             toast.error('please enter valid email id')
             return
         }
+
+        
+        // const formData = new FormData();
+        // console.log("printing",formData)
+        // formData.append("fullName", input.fullName);
+        // formData.append("email", input.email);
+        // formData.append("password", input.password);
+       
 
         const response = await dispatch(createAccount(input))
 
@@ -52,7 +63,7 @@ const SignUp = () => {
         navigate('/')
          
         setInput({
-            fullname:'',
+            fullName:'',
             email:'',
             password:''
         })
@@ -62,7 +73,7 @@ const SignUp = () => {
     <HomeLayouts>
       <div className='flex overflow-x-auto items-center justify-center h-[100vh] bg-slate-900 text-white'>
         <form noValidate
-        onSubmit={createAccount}
+        onSubmit={createNewAccount}
         className='flex flex-col justify-center items-center shadow-[0_0_10px_black] py-4 px-10'>
             <h1 className='text-3xl text-semibold'>Registration Page</h1>
             <div className='mt-5 flex flex-col justify-center items-center'>
@@ -102,7 +113,7 @@ const SignUp = () => {
                required
                onChange={handleInputChange}
                placeholder='Enter your password'
-               id='fullName'
+               id='password'
             
 
                />
