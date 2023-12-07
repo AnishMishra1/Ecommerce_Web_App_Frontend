@@ -4,6 +4,7 @@ import { AiFillCloseCircle} from 'react-icons/ai'
 import { Link, useNavigate } from 'react-router-dom';
 import Footer from '../Components/Footer';
 import { useDispatch , useSelector} from 'react-redux'
+import { createLogout } from '../Redux/Slices/AuthSlice';
 
 
 const HomeLayouts = ({ children }) => {
@@ -13,8 +14,12 @@ const HomeLayouts = ({ children }) => {
    const isLoggedIn = useSelector( (state) =>  state?.auth?.isLoggedIn)
    const role = useSelector((state) => state?.auth?.role)
 
-   function handleLogout(){
+   async function handleLogout(e){
     e.preventDefault()
+
+    const res = await dispatch(createLogout())
+    if(res?.payload?.success)
+    navigate('/')
    }
 
     function changeWidth() {
