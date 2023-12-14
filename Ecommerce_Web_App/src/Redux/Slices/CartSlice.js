@@ -8,6 +8,8 @@ const initialState = ({
     items: [],
     totalQuantity:0,
     totalPrice:0,
+    shippingInfo:localStorage.getItem("shippingInfo") != undefined ? JSON.parse(localStorage.getItem("shippingInfo")):{}
+
     
 })
 
@@ -24,6 +26,21 @@ export const getAllProduct = createAsyncThunk('/cart/product', async () => {
         toast.error(error?.response?.data?.message)
     }
 })
+
+// export const saveShippingInfo = createAsyncThunk('/cart/shippingInfo', async (allInput) => {
+//     try {
+//         const response = allInput
+//          toast.promise(response,{
+//             loading: 'data is laoding',
+//             success: "data loaded succefully",
+//                 error: "Failed "
+//          })
+//          return data
+//     } catch (error) {
+//         toast.error(error)
+        
+//     }
+// })
 
 const cartSlice = createSlice({
     name:'cart',
@@ -81,7 +98,13 @@ const cartSlice = createSlice({
              return item;
         } ) 
         
-    }   
+        } ,
+        saveShippingInfo: (state,action) => {
+            localStorage.setItem("shippingInfo", JSON.stringify(action?.payload));
+            state.shippingInfo= action.payload
+        }
+        
+         
             
              
         
@@ -91,9 +114,11 @@ const cartSlice = createSlice({
             if(action.payload){
                 console.log(action.payload)
                 
-                state.cart= [...action.payload]
+                state.cart= [...action.payload];
+                
             }
         })
+        
         
     }
      
@@ -101,5 +126,5 @@ const cartSlice = createSlice({
     
 })
 
-export const {addToCart,getCartTotal,removeItem,increaseItem,decreaseItem } = cartSlice.actions
+export const {addToCart,getCartTotal,removeItem,increaseItem,decreaseItem,saveShippingInfo } = cartSlice.actions
 export default cartSlice.reducer;

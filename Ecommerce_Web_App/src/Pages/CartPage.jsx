@@ -4,10 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MdDelete } from "react-icons/md";
 import { decreaseItem, getCartTotal, increaseItem, removeItem } from '../Redux/Slices/CartSlice';
 import React, { useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const CartPage = () => {
 
     const dispatch = useDispatch()
+
+    const {state} = useLocation()
+
+    const navigate = useNavigate()
 
     const {items, totalQuantity, totalPrice} = useSelector((state) => state?.allCart)
 
@@ -24,10 +29,10 @@ const CartPage = () => {
     
    
       
-     <div className="h-screen  bg-slate-800 text-white pt-20">
+     <div className="min-h-[90vh]  bg-slate-800 text-white pt-20">
        <h1 className="mb-10 text-center text-2xl font-bold">Cart Items-{items.length}</h1>
        
-         <div className="mx-auto max-w-5xl justify-center px-6 flex md:space-x-6 xl:px-0">
+         <div className="mx-auto max-w-5xl md:flex-row flex-col justify-center px-6 flex md:space-x-6 xl:px-0">
          
             
            <div className="rounded-lg md:w-2/3">
@@ -78,7 +83,8 @@ const CartPage = () => {
              <p className="text-lg font-bold">Total-Amount{totalPrice}</p>
              
            </div>
-           <button className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Check out</button>
+           <button onClick={() => navigate('/shippinginfo', {state:{...state}})}
+            className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Check out</button>
          </div>
        </div>
        
