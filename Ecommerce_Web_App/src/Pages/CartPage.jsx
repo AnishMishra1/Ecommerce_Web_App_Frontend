@@ -14,11 +14,11 @@ const CartPage = () => {
 
     const navigate = useNavigate()
 
-    const {items, totalQuantity, totalPrice} = useSelector((state) => state?.allCart)
+    const {orderItems, totalQuantity, totalPrice} = useSelector((state) => state?.allCart)
 
     useEffect(() =>{
         dispatch(getCartTotal())
-    },[items])
+    },[orderItems])
 
   
   return (
@@ -30,13 +30,13 @@ const CartPage = () => {
    
       
      <div className="min-h-[90vh]  bg-slate-800 text-white pt-20">
-       <h1 className="mb-10 text-center text-2xl font-bold">Cart Items-{items.length}</h1>
+       <h1 className="mb-10 text-center text-2xl font-bold">Cart Items-{orderItems.length}</h1>
        
          <div className="mx-auto max-w-5xl md:flex-row flex-col justify-center px-6 flex md:space-x-6 xl:px-0">
          
             
            <div className="rounded-lg md:w-2/3">
-           { items && items.map((data) => (
+           { orderItems && orderItems.map((data) => (
              <div className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
              <img src={data.images} alt={data.images} className="w-full rounded-lg sm:w-40" />
              <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">

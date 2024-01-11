@@ -16,7 +16,9 @@ const ShippingInfo = () => {
         address:'',
         country:'',
         pincode:'',
-        phoneNo:''
+        phoneNo:'',
+        city:'',
+        state:''
 
     })
 
@@ -34,7 +36,7 @@ const ShippingInfo = () => {
     async function ShippingInfo(event) {
        event.preventDefault()
 
-       if(!fullName ||!address ||!country ||!state|| !phoneNo|| !pincode ){
+       if(!fullName ||!address ||!country ||!state|| !phoneNo|| !pincode ||!city ){
         toast.error('all field are neccesary ')
         return
        }
@@ -98,6 +100,17 @@ const ShippingInfo = () => {
              id='state'
              />
 
+            <label htmlFor="city" className='mt-5'>City</label>
+             <input type="city"
+             className='px-2 py-1 text-black border rounded-lg'
+             name='city'
+             value={setInput.city}
+             required
+             onChange={handleInputChange}
+             placeholder='city'
+             id='city'
+             />
+
            <label htmlFor="pincode" className='mt-5'>Pincode</label>
              <input type="number"
              className='px-2 py-1 text-black border rounded-lg'
@@ -137,7 +150,7 @@ const ShippingInfo = () => {
           </div>
 
           <button type='submit'
-        //   onClick={() => navigate('/confirmpage', {state:{...state}}) }
+          onClick={() => navigate('/confirm', {state:{...state}}) }
           className='mt-5 py-2 px-4 bg-green-700 hover:bg-green-400 border rounded-lg'
           >Confirm</button>
 

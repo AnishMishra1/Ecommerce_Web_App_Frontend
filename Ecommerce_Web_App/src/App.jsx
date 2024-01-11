@@ -7,6 +7,7 @@ import Login from './Pages/Login.jsx'
 import Product from './Pages/Product.jsx'
 import CartPage from './Pages/CartPage.jsx'
 import ShippingInfo from './Pages/ShippingInfo.jsx'
+import Confirm from './Pages/Confirm.jsx'
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       <Route path='/product' element={<Product />}></Route>
       <Route path='/cartpage' element={<CartPage />}></Route>
       <Route path='/shippinginfo' element={<ShippingInfo />}></Route>
+      <Route path='/confirm' element={<Confirm />}></Route>
    
    </Routes>
     

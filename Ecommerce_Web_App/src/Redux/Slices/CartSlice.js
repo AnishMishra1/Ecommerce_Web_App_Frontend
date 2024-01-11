@@ -5,9 +5,12 @@ import toast from "react-hot-toast";
 
 const initialState = ({
     cart: [],
-    items: [],
+    orderItems: [],
     totalQuantity:0,
+    itemPrice:0,
+    taxPrice:0,
     totalPrice:0,
+    shippingPrice:0,
     shippingInfo:localStorage.getItem("shippingInfo") != undefined ? JSON.parse(localStorage.getItem("shippingInfo")):{}
 
     
@@ -47,16 +50,16 @@ const cartSlice = createSlice({
     initialState,
     reducers:{
         addToCart: (state,action) =>{
-            let find = state.items.findIndex((element) => element._id === action.payload._id)
+            let find = state.orderItems.findIndex((element) => element._id === action.payload._id)
             if(find >= 0){
-                state.items[find].stock += 1;
+                state.orderItems[find].stock += 1;
             }
             else{
-                state.items.push(action.payload)
+                state.orderItems.push(action.payload)
             }
         } ,
         getCartTotal: (state)=> {
-            let {totalPrice, totalQuantity} = state.items.reduce(
+            let {totalPrice, totalQuantity} = state.orderItems.reduce(
                 (cartTotal, cartItem) =>{
                     console.log("cartTotal", cartTotal);
                     console.log("cartItem", cartItem);
@@ -77,10 +80,10 @@ const cartSlice = createSlice({
             state.totalQuantity = totalQuantity;
         }, 
         removeItem: (state,action) => {
-            state.items = state.items.filter((item) => item._id !== action.payload)
+            state.orderItems = state.orderItems.filter((item) => item._id !== action.payload)
         },
         increaseItem: (state,action) => {
-            state.items = state.items.map((item) => {
+            state.orderItems = state.orderItems.map((item) => {
                 if(item._id ===action.payload){
                     return {...item, stock: item.stock +1}
                 }
@@ -90,7 +93,7 @@ const cartSlice = createSlice({
             })
         },
         decreaseItem : (state,action) => {
-            state.items = state.items.map((item) => {
+            state.orderItems = state.orderItems.map((item) => {
                 if(item._id ===action.payload){
                     return {...item, stock: item.stock -1}
                 }

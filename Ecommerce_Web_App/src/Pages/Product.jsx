@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 const Product = () => {
 
     const dispatch = useDispatch()
-    const {cart,items} = useSelector((state) => state?.allCart)
+    const {cart,orderItems} = useSelector((state) => state?.allCart)
     const navigate = useNavigate()
     const {state} = useLocation()
 
@@ -28,7 +28,7 @@ const Product = () => {
     
     <div className='flex justify-end mx-2'>
         <button onClick={() => navigate("/cartpage", {state: {...state}})}
-        className='py-2 px-3 bg-green-600 hover:bg-green-400 rounded-md text-bold'>Cart({items.length})</button>
+        className='py-2 px-3 bg-green-600 hover:bg-green-400 rounded-md text-bold'>Cart({orderItems.length})</button>
     </div>
     
            <h1 className='text-center text-3xl mb-5 font-semibold'>
