@@ -5,8 +5,8 @@ import toast from "react-hot-toast";
 
 const initialState = ({
     isPaymentVerify: false,
-    key:'',
-    orderId:''
+    key:" ",
+    orderId:" "
 })
 
 
@@ -38,14 +38,15 @@ export const checkout = createAsyncThunk('/payment/checkout',async (data) => {
 })
 
 export const paymentVerify = createAsyncThunk('/payment/verification',async (data) => {
+      console.log(data)
     try {
-        const response = await axiosInstance.post("/user/verificationpayment",{
+        const response =  axiosInstance.post("/user/verificationpayment",{
             razorpay_payment_id : data.razorpay_payment_id,
             razorpay_order_id: data.razorpay_order_id,
             razorpay_signature : data.razorpay_signature
         
         })
-        return response.data
+        return (await response).data
     } catch (error) {
         toast.error(error?.response?.message)
     }
@@ -58,10 +59,12 @@ const RazorpaySlice = createSlice({
     extraReducers:(builder) => {
         builder.addCase(getRazorpaykey.fulfilled,(state,action) => {
             state.key=action?.payload?.key
+            console.log("gerfy" ,state.key)
         })
         .addCase(checkout.fulfilled, (state,action) => {
             console.log("checking",action.payload)
             state.orderId= action?.payload?.order?.id
+            console.log("final", state.orderId)
         }).
         addCase(paymentVerify.fulfilled, (state,action) => {
             toast.success(action?.payload?.message),

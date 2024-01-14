@@ -5,16 +5,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { checkout, getRazorpaykey, paymentVerify} from '../Redux/Slices/RazorpaySlice';
 import toast from "react-hot-toast";
 
-const Confirm = () => {
-  const dispatch = useDispatch();
+const Confirm2 = () => {
+
+    const dispatch = useDispatch();
   const navigate = useNavigate();
   const {} = useLocation()
 
-  const {key} = useSelector((state) => state?.payment);
+  const razorpayKey = useSelector((state) => state?.payment?.key);
   
-  console.log("hhhhhhhh",key)
-  const {orderId} = useSelector((state) => state?.payment)
-  console.log("in confirm page", orderId)
+  const orderId = useSelector((state) => state?.payment?.order?.id)
   const userData = useSelector((state) => state?.auth?.data)
   const {totalPrice} = useSelector((state) => state?.allCart)
   
@@ -30,28 +29,27 @@ const Confirm = () => {
 
   
 
-  async function handleOrder(e) {
-      e.preventDefault();
-      if(!key || !orderId){
+  async function handleOrder() {
+      // e.preventDefault();
+      if(!razorpayKey || !orderId){
           toast.error('something went wrong')
       }
 
       const options = {
-          key,
+          key: razorpayKey,
           order_id: orderId,
           amount:totalPrice,
           name: userData.fullName,
           description: 'order',
-          // theme: {
-          //    color: '#F37254'
-          // },
-          // prefill:{
-          //     email: userData.email,
-          //     name: userData.fullName
-          // },
+          theme: {
+             color: '#F37254'
+          },
+          prefill:{
+              email: userData.email,
+              name: userData.fullName
+          },
 
           handler: async function (response){
-             
               paymentDetails.razorpay_payment_id = response.razorpay_payment_id;
               paymentDetails.razorpay_signature = response.razorpay_signature;
               paymentDetails.razorpay_order_id = response.razorpay_order_id;
@@ -63,7 +61,6 @@ const Confirm = () => {
 
               res?.payload?.success ? navigate('/success'): navigate('/fail')
               
-              
              
        }
          
@@ -73,8 +70,6 @@ const Confirm = () => {
       const paymentObject = new window.Razorpay(options);
       paymentObject.open();
   }
-
- 
 
   async function load(){
     const res2 = await dispatch(getRazorpaykey())
@@ -100,4 +95,7 @@ const Confirm = () => {
   )
 }
 
-export default Confirm;
+
+
+
+export default Confirm2
