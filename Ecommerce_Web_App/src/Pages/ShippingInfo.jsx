@@ -16,7 +16,7 @@ const ShippingInfo = () => {
         fullName:'',
         address:'',
         country:'',
-        pincode:'',
+        pinCode:'',
         phoneNo:'',
         city:'',
         state:''
@@ -32,17 +32,31 @@ const ShippingInfo = () => {
 
     }
 
-    console.log("hjbbh",input)
+    
 
-    async function ShippingInfo(event) {
+    async function ShippingInfosave(event) {
        event.preventDefault()
 
-       if(!fullName ||!address ||!country ||!state|| !phoneNo|| !pincode ||!city ){
-        toast.error('all field are neccesary ')
-        return
-       }
+      //  if(!input.fullName ||!input.address ||!input.country ||!input.state|| !input.phoneNo|| !input.pincode ||!input.city ){
+      //   toast.error('all field are neccesary ')
+      //   return
+      //  }
 
        const res = await dispatch(saveShippingInfo(input)) 
+       console.log("this is a data", res)
+
+       if(res?.payload)
+        navigate('/confirm')
+
+       setInput({
+        fullName:'',
+        address:'',
+        country:'',
+        pinCode:'',
+        phoneNo:'',
+        city:'',
+        state:''
+       })
 
        
 
@@ -54,7 +68,7 @@ const ShippingInfo = () => {
     <HomeLayouts>
     <div className='flex overflow-x-auto items-center justify-center h-[100vh] bg-slate-900 text-white'>
       <form noValidate
-      onSubmit={ShippingInfo}
+      onSubmit={ShippingInfosave}
       
       className='flex flex-col justify-center items-center shadow-[0_0_10px_black] py-4 px-10'>
           <h1 className='text-3xl text-semibold'>Shipping Info</h1>
@@ -112,15 +126,15 @@ const ShippingInfo = () => {
              id='city'
              />
 
-           <label htmlFor="pincode" className='mt-5'>Pincode</label>
+           <label htmlFor="pinCode" className='mt-5'>Pincode</label>
              <input type="number"
              className='px-2 py-1 text-black border rounded-lg'
-             name='pincode'
-             value={setInput.pincode}
+             name='pinCode'
+             value={setInput.pinCode}
              required
              onChange={handleInputChange}
-             placeholder='Enter your pincode'
-             id='pincode'
+             placeholder='Enter your pinCode'
+             id='pinCode'
              />
 
             <label htmlFor="phoneNo" className='mt-5'>Phone-Number</label>
@@ -151,7 +165,7 @@ const ShippingInfo = () => {
           </div>
 
           <button type='submit'
-          onClick={() => navigate('/confirm', {state:{...state}}) }
+          // onClick={() => navigate('/confirm', {state:{...state}}) }
           className='mt-5 py-2 px-4 bg-green-700 hover:bg-green-400 border rounded-lg'
           >Confirm</button>
 

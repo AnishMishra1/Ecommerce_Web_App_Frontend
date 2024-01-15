@@ -103,8 +103,10 @@ const cartSlice = createSlice({
         
         } ,
         saveShippingInfo: (state,action) => {
+            console.log(action.payload)
             localStorage.setItem("shippingInfo", JSON.stringify(action?.payload));
-            state.shippingInfo= action.payload
+            state.shippingInfo= action?.payload
+            
         }
         
          

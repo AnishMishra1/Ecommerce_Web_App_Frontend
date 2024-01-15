@@ -6,7 +6,9 @@ import toast from "react-hot-toast";
 const initialState = ({
     isPaymentVerify: false,
     key:" ",
-    orderId:" "
+    orderId:" ",
+    razorpay_payment_id:" ",
+    newOrder:false
 })
 
 
@@ -52,6 +54,27 @@ export const paymentVerify = createAsyncThunk('/payment/verification',async (dat
     }
 
 })
+
+export const createOrder = createAsyncThunk('/payment/success/newOrder', async (data) =>{
+    try {
+       const response = axiosInstance.post('/order/new',data)
+
+       toast.promise(response, {
+        loading: 'Wait ! Creating Your order',
+        success:(data) => {
+            console.log('ghjghjgh',data)
+            
+            return data?.message
+            
+        }, 
+        error:'Failed to create new order'
+    })
+
+    return (await response).data
+    } catch (error) {
+        toast.error(error)
+    }
+})
 const RazorpaySlice = createSlice({
     name:"payment",
     initialState,
@@ -67,13 +90,19 @@ const RazorpaySlice = createSlice({
             console.log("final", state.orderId)
         }).
         addCase(paymentVerify.fulfilled, (state,action) => {
+            console.log('isssss',action.payload)
             toast.success(action?.payload?.message),
-            state.isPaymentVerify= action?.payload?.success
+            state.isPaymentVerify= action?.payload?.success,
+            state.razorpay_payment_id = action?.payload?.razorpayId
+
 
         })
         .addCase(paymentVerify.rejected,(state,action) => {
             toast.success(action?.payload?.message)
             state.isPaymentVerify= action?.payload?.success
+        })
+        .addCase(createOrder.fulfilled, (state,action)=>{
+            state.newOrder = action?.payload?.success
         })
 
     }
